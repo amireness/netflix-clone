@@ -20,6 +20,18 @@ def init_db():
         (1, "Inception", "Sci-Fi"),
         (2, "Interstellar", "Sci-Fi"),
         (3, "The Dark Knight", "Action"),
+        (4, "The Matrix", "Sci-Fi"),
+        (5, "Dune", "Sci-Fi"),
+        (6, "John Wick", "Action"),
+        (7, "Mad Max: Fury Road", "Action"),
+        (8, "The Shawshank Redemption", "Drama"),
+        (9, "Forrest Gump", "Drama"),
+        (10, "The Social Network", "Drama"),
+        (11, "The Grand Budapest Hotel", "Comedy"),
+        (12, "Superbad", "Comedy"),
+        (13, "Knives Out", "Mystery"),
+        (14, "The Prestige", "Mystery"),
+        (15, "Ocean's Eleven", "Crime"),
     ]
 
     cursor.executemany("""
