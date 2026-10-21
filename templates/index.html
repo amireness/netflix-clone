@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Netflix Clone</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header class="navbar">
+        <h1 class="logo">NETFLIX CLONE</h1>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="#movies">Movies</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Discover Your Next Favorite Movie</h2>
+            <p>Explore movies, search titles, and find something to watch.</p>
+        </section>
+
+        <section class="catalog" id="movies">
+            <h2>Explore Movies</h2>
+
+            <div class="filters">
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search movies..."
+                >
+
+                <select id="genre">
+                    <option value="">All Genres</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Action">Action</option>
+                </select>
+            </div>
+
+            <div id="movie-list" class="movie-grid"></div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

@@ -1,10 +1,13 @@
 import sqlite3
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 app = Flask(__name__)
 
 DATABASE = "movies.db"
 
+@app.route("/")
+def home():
+    return render_template("index.html")
 
 @app.route("/api/movies")
 def get_movies():
