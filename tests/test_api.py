@@ -14,16 +14,25 @@ def client(tmp_path, monkeypatch):
         CREATE TABLE movies (
             id INTEGER PRIMARY KEY,
             title TEXT NOT NULL,
-            genre TEXT NOT NULL
+            genre TEXT NOT NULL,
+            release_year INTEGER,
+            description TEXT
         )
     """)
 
     connection.executemany(
-        "INSERT INTO movies VALUES (?, ?, ?)",
+        """
+        INSERT INTO movies
+        (id, title, genre, release_year, description)
+        VALUES (?, ?, ?, ?, ?)
+        """,
         [
-            (1, "Inception", "Sci-Fi"),
-            (2, "Interstellar", "Sci-Fi"),
-            (3, "The Dark Knight", "Action"),
+            (1, "Inception", "Sci-Fi", 2010,
+            "A thief enters people's dreams to steal secrets."),
+            (2, "Interstellar", "Sci-Fi", 2014,
+            "A team travels through space to find a new home for humanity."),
+            (3, "The Dark Knight", "Action", 2008,
+            "Batman faces the Joker as chaos spreads through Gotham."),
         ],
     )
 
@@ -78,3 +87,16 @@ def test_no_matching_movies(client):
 
     assert response.status_code == 200
     assert response.get_json() == []
+
+def test_movie_details(client):
+    response = client.get("/api/movies?search=Inception")
+
+    assert response.status_code == 200
+
+    movie = response.get_json()[0]
+
+    assert movie["title"] == "Inception"
+    assert movie["release_year"] == 2010
+    assert movie["description"] == (
+        "A thief enters people's dreams to steal secrets."
+    )

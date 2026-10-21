@@ -47,11 +47,18 @@ async function loadMovies() {
         const title = document.createElement("h3");
         title.textContent = movie.title;
 
-        const genre = document.createElement("p");
-        genre.textContent = movie.genre;
+        const details = document.createElement("p");
+        details.className = "movie-details";
+        details.textContent = `${movie.release_year} • ${movie.genre}`;
+
+        const description = document.createElement("p");
+        description.className = "movie-description";
+        description.textContent = movie.description;
 
         card.appendChild(title);
-        card.appendChild(genre);
+        card.appendChild(details);
+        card.appendChild(description);
+
         movieList.appendChild(card);
     });
 }
