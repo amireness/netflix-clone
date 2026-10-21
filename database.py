@@ -17,6 +17,14 @@ def init_db():
         )
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS watchlist (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            movie_id INTEGER NOT NULL UNIQUE,
+            FOREIGN KEY (movie_id) REFERENCES movies(id)
+        )
+    """)
+
     cursor.execute("PRAGMA table_info(movies)")
     columns = [column[1] for column in cursor.fetchall()]
 

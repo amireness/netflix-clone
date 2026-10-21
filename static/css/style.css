@@ -179,3 +179,35 @@ nav a:hover {
     margin-bottom: 10px;
 }
 
+/* Watchlist buttons */
+.watchlist-button {
+    margin-top: auto;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e50914;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.watchlist-button:hover {
+    background-color: #b20710;
+}
+
+.movie-description {
+    margin-bottom: 20px;
+}
+
+/* My Watchlist section */
+#watchlist {
+    border-top: 1px solid #333333;
+    margin-top: 30px;
+    padding-bottom: 60px;
+}
+
+.watchlist-subtitle {
+    color: #aaaaaa;
+    margin-bottom: 25px;
+}

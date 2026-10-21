@@ -20,6 +20,14 @@ def client(tmp_path, monkeypatch):
         )
     """)
 
+    connection.execute("""
+        CREATE TABLE watchlist (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            movie_id INTEGER NOT NULL UNIQUE,
+            FOREIGN KEY (movie_id) REFERENCES movies(id)
+        )
+    """)
+
     connection.executemany(
         """
         INSERT INTO movies
@@ -100,3 +108,46 @@ def test_movie_details(client):
     assert movie["description"] == (
         "A thief enters people's dreams to steal secrets."
     )
+
+def test_empty_watchlist(client):
+    response = client.get("/api/watchlist")
+
+    assert response.status_code == 200
+    assert response.get_json() == []
+
+
+def test_add_movie_to_watchlist(client):
+    response = client.post(
+        "/api/watchlist",
+        json={"movie_id": 1}
+    )
+
+    assert response.status_code == 201
+
+    watchlist = client.get("/api/watchlist").get_json()
+
+    assert len(watchlist) == 1
+    assert watchlist[0]["title"] == "Inception"
+
+
+def test_prevent_duplicate_watchlist_movies(client):
+    client.post("/api/watchlist", json={"movie_id": 1})
+
+    response = client.post(
+        "/api/watchlist",
+        json={"movie_id": 1}
+    )
+
+    assert response.status_code == 409
+
+    watchlist = client.get("/api/watchlist").get_json()
+    assert len(watchlist) == 1
+
+
+def test_remove_movie_from_watchlist(client):
+    client.post("/api/watchlist", json={"movie_id": 1})
+
+    response = client.delete("/api/watchlist/1")
+
+    assert response.status_code == 200
+    assert client.get("/api/watchlist").get_json() == []
